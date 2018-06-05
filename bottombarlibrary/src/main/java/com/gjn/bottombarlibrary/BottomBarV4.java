@@ -46,7 +46,7 @@ public abstract class BottomBarV4<T extends BarTab> implements TabHost.OnTabChan
         this.manager = fragment.getChildFragmentManager();
         this.containerId = containerId;
         this.barViewId = barViewId;
-        this.barItems = barItems;
+        this.barItems = barItems == null ? new ArrayList<T>() : barItems;
     }
 
     public void create() {
