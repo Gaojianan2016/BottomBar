@@ -79,7 +79,9 @@ public abstract class BottomBarV4<T extends BarTab> implements TabHost.OnTabChan
     }
 
     public void updataView() {
-        updataView(barItems);
+        for (int i = 0; i < barItems.size(); i++) {
+            onBindBarView(barItems.get(i).getView(), i, barItems.get(i));
+        }
     }
 
     public void updataView(List<T> items) {

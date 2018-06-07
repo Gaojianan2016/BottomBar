@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost fth;
     private List<BarTab> list;
     private BottomBarV4<BarTab> bar;
+    private boolean change;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(int i, String tabId) {
                 Log.e("-s-", "点击" + i + "，tabId=" + tabId);
+            }
+        });
+
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (change) {
+                    change = false;
+                    bar.getBarItems().get(1).setTitle("标题1");
+                }else {
+                    bar.getBarItems().get(1).setTitle("我变了");
+                    change = true;
+                }
+                bar.updataView();
             }
         });
     }
