@@ -68,7 +68,7 @@ public abstract class BottomBarV4<T extends BarTab> implements TabHost.OnTabChan
         //添加item
         for (int i = 0; i < barItems.size(); i++) {
             T item = barItems.get(i);
-            View view = LayoutInflater.from(activity).inflate(barViewId, tabHost, false);
+            View view = LayoutInflater.from(activity).inflate(barViewId, null, false);
             onBindBarView(view, i, item);
             item.setView(view);
             tabHost.addTab(tabHost.newTabSpec(item.getTitle()).setIndicator(view),
