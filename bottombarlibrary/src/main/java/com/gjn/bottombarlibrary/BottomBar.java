@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,10 @@ import java.util.List;
  * Created by gjn on 2018/6/5.
  */
 
-public abstract class BottomBarV4<T extends BarTab> implements TabHost.OnTabChangeListener {
+public abstract class BottomBar<T extends BarTab> implements TabHost.OnTabChangeListener {
     private static final String TAG = "BottomBarV4";
     private Activity activity;
-    private FragmentTabHostV4 tabHost;
+    private FragmentTabHost tabHost;
     private FragmentManager manager;
     private int containerId;
     private int barViewId;
@@ -28,8 +29,8 @@ public abstract class BottomBarV4<T extends BarTab> implements TabHost.OnTabChan
 
     private onTabClickListener onTabClickListener;
 
-    public BottomBarV4(FragmentActivity activity, FragmentTabHostV4 tabHost,
-                       int containerId, int barViewId, List<T> barItems) {
+    public BottomBar(FragmentActivity activity, FragmentTabHost tabHost,
+                     int containerId, int barViewId, List<T> barItems) {
         this.activity = activity;
         this.tabHost = tabHost;
         this.manager = activity.getSupportFragmentManager();
@@ -38,8 +39,8 @@ public abstract class BottomBarV4<T extends BarTab> implements TabHost.OnTabChan
         this.barItems = barItems == null ? new ArrayList<T>() : barItems;
     }
 
-    public BottomBarV4(Fragment fragment, FragmentTabHostV4 tabHost,
-                       int containerId, int barViewId, List<T> barItems) {
+    public BottomBar(Fragment fragment, FragmentTabHost tabHost,
+                     int containerId, int barViewId, List<T> barItems) {
         this.activity = fragment.getActivity();
         this.tabHost = tabHost;
         this.manager = fragment.getChildFragmentManager();
@@ -107,12 +108,12 @@ public abstract class BottomBarV4<T extends BarTab> implements TabHost.OnTabChan
         return barItems;
     }
 
-    public BottomBarV4 setBarItems(List<T> items) {
+    public BottomBar setBarItems(List<T> items) {
         barItems = items;
         return this;
     }
 
-    public BottomBarV4 setOnTabClickListener(BottomBarV4.onTabClickListener onTabClickListener) {
+    public BottomBar setOnTabClickListener(BottomBar.onTabClickListener onTabClickListener) {
         this.onTabClickListener = onTabClickListener;
         return this;
     }

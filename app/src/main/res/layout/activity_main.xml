@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v4.app.FragmentTabHost
+    <com.gjn.bottombarlibrary.FragmentTabHostV4
         android:id="@+id/fth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

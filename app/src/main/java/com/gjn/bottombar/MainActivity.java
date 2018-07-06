@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import com.gjn.bottombarlibrary.BarTab;
 import com.gjn.bottombarlibrary.BottomBarV4;
+import com.gjn.bottombarlibrary.FragmentTabHostV4;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentTabHost fth;
+    private FragmentTabHostV4 fth;
     private List<BarTab> list;
     private BottomBarV4<BarTab> bar;
     private boolean change;

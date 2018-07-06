@@ -19,7 +19,7 @@ public class TestFm extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fm, container, false);
+        View view = inflater.inflate(R.layout.fm, null);
 
         ConstraintLayout cl = view.findViewById(R.id.cl);
 

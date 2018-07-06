@@ -11,7 +11,7 @@ allprojects {
 
 
 dependencies {
-    implementation 'com.github.Gaojianan2016:BottomBar:1.0.3'
+    implementation 'com.github.Gaojianan2016:BottomBar:1.0.4'
 }
 ```
 
