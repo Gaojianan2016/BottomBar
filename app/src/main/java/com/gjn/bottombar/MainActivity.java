@@ -8,10 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gjn.bottombarlibrary.BarTab;
-import com.gjn.bottombarlibrary.BottomBar;
 import com.gjn.bottombarlibrary.BottomBarV4;
 import com.gjn.bottombarlibrary.BottomBarV4View;
-import com.gjn.bottombarlibrary.BottomBarView;
 import com.gjn.bottombarlibrary.OnBindBarDateListener;
 
 import java.util.ArrayList;
