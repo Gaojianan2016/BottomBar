@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="bottomBarView">
+        <attr name="containerId" format="reference" />
+        <attr name="barViewId" format="reference" />
+    </declare-styleable>
+</resources>

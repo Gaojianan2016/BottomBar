@@ -12,7 +12,6 @@ public class BarTab {
     private Object img;
     private Class<?> cls;
     private Bundle bundle;
-    private View view;
 
     public String getTitle() {
         return title;
@@ -36,14 +35,6 @@ public class BarTab {
 
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
-    }
-
-    public View getView() {
-        return view;
-    }
-
-    public void setView(View view) {
-        this.view = view;
     }
 
     public Object getImg() {

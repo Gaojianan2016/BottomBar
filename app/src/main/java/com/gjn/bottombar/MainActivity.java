@@ -1,7 +1,6 @@
 package com.gjn.bottombar;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -9,17 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gjn.bottombarlibrary.BarTab;
+import com.gjn.bottombarlibrary.BottomBar;
 import com.gjn.bottombarlibrary.BottomBarV4;
-import com.gjn.bottombarlibrary.FragmentTabHostV4;
+import com.gjn.bottombarlibrary.BottomBarV4View;
+import com.gjn.bottombarlibrary.BottomBarView;
+import com.gjn.bottombarlibrary.OnBindBarDateListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentTabHostV4 fth;
     private List<BarTab> list;
-    private BottomBarV4<BarTab> bar;
+//    private BottomBarView bbv;
+    private BottomBarV4View bbv;
     private boolean change;
 
     @Override
@@ -27,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fth = findViewById(R.id.fth);
+        bbv = findViewById(R.id.bbv);
+
         list = new ArrayList<>();
         BarTab barTab;
         Bundle bundle;
@@ -42,17 +45,17 @@ public class MainActivity extends AppCompatActivity {
             list.add(barTab);
         }
 
-        bar = new BottomBarV4<BarTab>(this, fth, R.id.fl, R.layout.item, list) {
+        OnBindBarDateListener dataBind = new OnBindBarDateListener() {
             @Override
-            protected void onBindBarView(View view, int i, BarTab item) {
+            public void onBindBarView(View view, int i, BarTab item) {
                 TextView textView = view.findViewById(R.id.tv);
                 textView.setText(item.getTitle());
-                textView.setTextColor(getResources().getColorStateList(R.color.tv_color));
                 ImageView imageView = view.findViewById(R.id.img);
                 imageView.setImageResource((Integer) item.getImg());
             }
         };
-        bar.create();
+
+        bbv.setOnBindBarDateListener(dataBind).updataView(list);
 
         barTab = new BarTab();
         barTab.setTitle("标题7");
@@ -62,35 +65,44 @@ public class MainActivity extends AppCompatActivity {
         bundle.putInt("color", 7);
         barTab.setBundle(bundle);
         list.add(barTab);
-        bar.updataView(list);
+        bbv.updataView(list);
 
-        bar.setCurrentTab(2);
+        bbv.setNotClick(3, 4);
 
-        bar.setOnTabClickListener(new BottomBarV4.onTabClickListener() {
-            @Override
-            public void onClick(int i, String tabId) {
-                Log.e("-s-", "点击" + i + "，tabId=" + tabId);
-            }
-        });
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (change) {
                     change = false;
-                    bar.getBarItems().get(1).setTitle("标题1");
-                }else {
-                    bar.getBarItems().get(1).setTitle("我变了");
+                    bbv.getBarItems().get(3).setTitle("标题3");
+                    bbv.getBarItems().get(4).setTitle("标题7");
+                    bbv.setOnTabClickListener(null);
+                } else {
+                    bbv.getBarItems().get(3).setTitle("不能点");
+                    bbv.getBarItems().get(4).setTitle("不能点");
+//                    bbv.setOnTabClickListener(new BottomBar.onTabClickListener() {
+//                        @Override
+//                        public void onClick(int i, String tabId) {
+//                            Log.e("-s-", "点击" + i + "，tabId=" + tabId);
+//                        }
+//                    });
+                    bbv.setOnTabClickListener(new BottomBarV4.onTabClickListener() {
+                        @Override
+                        public void onClick(int i, String tabId) {
+                            Log.e("-s-", "点击" + i + "，tabId=" + tabId);
+                        }
+                    });
                     change = true;
                 }
-                bar.updataView();
+                bbv.updataView();
             }
         });
     }
 
     @Override
     protected void onDestroy() {
-        bar.destroy();
+        bbv.destroy();
         super.onDestroy();
     }
 }

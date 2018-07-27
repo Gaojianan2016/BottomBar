@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTabHost;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -14,29 +13,29 @@ import android.widget.FrameLayout;
 import java.util.List;
 
 /**
- * @author gjn
- * @time 2018/7/27 14:59
+ * BottomBarV4View
+ * Created by gjn
+ * on 2018-07-28 2:48.
  */
-
-public class BottomBarView extends FrameLayout {
-    private static final String TAG = "BottomBarView";
-    private FragmentTabHost tabHost;
+public class BottomBarV4View extends FrameLayout {
+    private static final String TAG = "BottomBarV4View";
+    private FragmentTabHostV4 tabHost;
     private List<BarTab> list;
-    private BottomBar<BarTab> bar;
+    private BottomBarV4<BarTab> bar;
     private int containerId = View.NO_ID;
     private int barViewId = View.NO_ID;
 
     private OnBindBarDateListener onBindBarDateListener;
 
-    public BottomBarView(@NonNull Context context) {
+    public BottomBarV4View(@NonNull Context context) {
         this(context, null);
     }
 
-    public BottomBarView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public BottomBarV4View(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BottomBarView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public BottomBarV4View(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         if (attrs != null) {
@@ -45,25 +44,25 @@ public class BottomBarView extends FrameLayout {
             barViewId = ta.getResourceId(R.styleable.bottomBarView_barViewId, View.NO_ID);
             ta.recycle();
         }
-        tabHost = new FragmentTabHost(context);
+        tabHost = new FragmentTabHostV4(context);
     }
 
-    public BottomBarView setList(List<BarTab> list) {
+    public BottomBarV4View setList(List<BarTab> list) {
         this.list = list;
         return this;
     }
 
-    public BottomBarView setContainerId(int containerId) {
+    public BottomBarV4View setContainerId(int containerId) {
         this.containerId = containerId;
         return this;
     }
 
-    public BottomBarView setBarViewId(int barViewId) {
+    public BottomBarV4View setBarViewId(int barViewId) {
         this.barViewId = barViewId;
         return this;
     }
 
-    public BottomBarView setOnBindBarDateListener(OnBindBarDateListener onBindBarDateListener) {
+    public BottomBarV4View setOnBindBarDateListener(OnBindBarDateListener onBindBarDateListener) {
         this.onBindBarDateListener = onBindBarDateListener;
         return this;
     }
@@ -74,13 +73,13 @@ public class BottomBarView extends FrameLayout {
         }
     }
 
-    public void setOnTabClickListener(BottomBar.onTabClickListener l){
+    public void setOnTabClickListener(BottomBarV4.onTabClickListener l){
         if (bar != null) {
             bar.setOnTabClickListener(l);
         }
     }
 
-    public void setOnTabChangeListener(BottomBar.onTabChangeListener l){
+    public void setOnTabChangeListener(BottomBarV4.onTabChangeListener l){
         if (bar != null) {
             bar.setOnTabChangeListener(l);
         }
@@ -140,7 +139,7 @@ public class BottomBarView extends FrameLayout {
         Log.d(TAG, "create new " + TAG);
         removeAllViews();
         addView(tabHost, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        bar = new BottomBar<BarTab>((FragmentActivity) getContext(), tabHost, containerId, barViewId, list) {
+        bar = new BottomBarV4<BarTab>((FragmentActivity) getContext(), tabHost, containerId, barViewId, list) {
             @Override
             protected void onBindBarView(View view, int i, BarTab item) {
                 onBindBarDateListener.onBindBarView(view, i, item);

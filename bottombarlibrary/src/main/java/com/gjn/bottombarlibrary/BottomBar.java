@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TabHost;
-import android.widget.TabWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,31 +18,36 @@ import java.util.List;
  */
 
 public abstract class BottomBar<T extends BarTab> implements TabHost.OnTabChangeListener {
-    private static final String TAG = "BottomBarV4";
+    private static final String TAG = "BottomBar";
     private Activity activity;
     private FragmentTabHost tabHost;
     private FragmentManager manager;
     private int containerId;
     private int barViewId;
     private List<T> barItems;
+    private int[] notOnClick;
 
     private onTabClickListener onTabClickListener;
+    private onTabChangeListener onTabChangeListener;
 
     public BottomBar(FragmentActivity activity, FragmentTabHost tabHost,
                      int containerId, int barViewId, List<T> barItems) {
+        this(tabHost, containerId, barViewId, barItems);
+        Log.d(TAG, "Activity 初始化");
         this.activity = activity;
-        this.tabHost = tabHost;
         this.manager = activity.getSupportFragmentManager();
-        this.containerId = containerId;
-        this.barViewId = barViewId;
-        this.barItems = barItems == null ? new ArrayList<T>() : barItems;
     }
 
     public BottomBar(Fragment fragment, FragmentTabHost tabHost,
                      int containerId, int barViewId, List<T> barItems) {
+        this(tabHost, containerId, barViewId, barItems);
+        Log.d(TAG, "Fragment 初始化");
         this.activity = fragment.getActivity();
-        this.tabHost = tabHost;
         this.manager = fragment.getChildFragmentManager();
+    }
+
+    private BottomBar(FragmentTabHost tabHost, int containerId, int barViewId, List<T> barItems) {
+        this.tabHost = tabHost;
         this.containerId = containerId;
         this.barViewId = barViewId;
         this.barItems = barItems == null ? new ArrayList<T>() : barItems;
@@ -58,8 +62,12 @@ public abstract class BottomBar<T extends BarTab> implements TabHost.OnTabChange
             Log.e(TAG, "barItems is null");
             return;
         }
+        Log.d(TAG, TAG + " is create.");
         //初始化
         tabHost.removeAllViews();
+        if (notOnClick == null) {
+            notOnClick = new int[barItems.size()];
+        }
         tabHost.setup(activity, manager, containerId);
         //tab切换监听
         tabHost.setOnTabChangedListener(this);
@@ -68,19 +76,28 @@ public abstract class BottomBar<T extends BarTab> implements TabHost.OnTabChange
         //添加item
         for (int i = 0; i < barItems.size(); i++) {
             T item = barItems.get(i);
-            View view = LayoutInflater.from(activity).inflate(barViewId, null, false);
+            View view = LayoutInflater.from(activity).inflate(barViewId, null);
             onBindBarView(view, i, item);
-            item.setView(view);
+            setOnTabClickListener(view, i, item.getTitle());
             tabHost.addTab(tabHost.newTabSpec(item.getTitle()).setIndicator(view),
                     item.getCls(), item.getBundle());
         }
         //默认选中
-        selectTab(0);
+        setCurrentTab(0);
+        selectTab();
+    }
+
+    public BottomBar setNotClick(int... positions) {
+        if (positions == null) {
+            positions = new int[barItems.size()];
+        }
+        notOnClick = positions;
+        return this;
     }
 
     public void updataView() {
         for (int i = 0; i < barItems.size(); i++) {
-            onBindBarView(barItems.get(i).getView(), i, barItems.get(i));
+            onBindBarView(getBarView(i), i, getBarItem(i));
         }
     }
 
@@ -101,46 +118,84 @@ public abstract class BottomBar<T extends BarTab> implements TabHost.OnTabChange
     }
 
     public View getBarView(int i) {
-        return barItems.get(i).getView();
+        return tabHost.getTabWidget().getChildAt(i);
+    }
+
+    public int getBarViewCount() {
+        return tabHost.getTabWidget().getChildCount();
+    }
+
+    public View getCurrentView() {
+        return tabHost.getCurrentTabView();
+    }
+
+    public int getCurrentId() {
+        return tabHost.getCurrentTab();
+    }
+
+    public String getCurrentTag() {
+        return tabHost.getCurrentTabTag();
     }
 
     public List<T> getBarItems() {
         return barItems;
     }
 
+    public T getBarItem(int i) {
+        return barItems.get(i);
+    }
+
     public BottomBar setBarItems(List<T> items) {
-        barItems = items;
+        barItems = items == null ? new ArrayList<T>() : barItems;
         return this;
     }
 
-    public BottomBar setOnTabClickListener(BottomBar.onTabClickListener onTabClickListener) {
+    public BottomBar setOnTabClickListener(onTabClickListener onTabClickListener) {
         this.onTabClickListener = onTabClickListener;
+        for (int i = 0; i < getBarViewCount(); i++) {
+            setOnTabClickListener(getBarView(i), i, getBarItem(i).getTitle());
+        }
         return this;
     }
 
-    private void selectTab(int position) {
-        for (int i = 0; i < barItems.size(); i++) {
-            View view = barItems.get(i).getView();
-            if (view != null) {
-                if (position == i) {
-                    view.setSelected(true);
-                } else {
-                    view.setSelected(false);
+    public BottomBar setOnTabChangeListener(onTabChangeListener l) {
+        this.onTabChangeListener = l;
+        return this;
+    }
+
+    private void setOnTabClickListener(View view, final int i, final String title) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onTabClickListener != null) {
+                    onTabClickListener.onClick(i, title);
+                    for (int position : notOnClick) {
+                        if (position == i) {
+                            return;
+                        }
+                    }
                 }
+                setCurrentTab(i);
             }
+        });
+    }
+
+    private void selectTab() {
+        for (int i = 0; i < getBarViewCount(); i++) {
+            if (getBarView(i) != null) {
+                getBarView(i).setSelected(false);
+            }
+        }
+        if (getCurrentView() != null) {
+            getCurrentView().setSelected(true);
         }
     }
 
     @Override
     public void onTabChanged(String tabId) {
-        TabWidget tabWidget = tabHost.getTabWidget();
-        for (int i = 0; i < tabWidget.getChildCount(); i++) {
-            if (i == tabHost.getCurrentTab()) {
-                selectTab(tabHost.getCurrentTab());
-                if (onTabClickListener != null) {
-                    onTabClickListener.onClick(i, tabId);
-                }
-            }
+        selectTab();
+        if (onTabChangeListener != null) {
+            onTabChangeListener.onTabChanged(getCurrentId(), tabId);
         }
     }
 
@@ -148,5 +203,9 @@ public abstract class BottomBar<T extends BarTab> implements TabHost.OnTabChange
 
     public interface onTabClickListener {
         void onClick(int i, String tabId);
+    }
+
+    public interface onTabChangeListener {
+        void onTabChanged(int i, String tabId);
     }
 }
