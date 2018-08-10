@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gjn.bottombarlibrary.BarTab;
 import com.gjn.bottombarlibrary.BottomBarV4;
 import com.gjn.bottombarlibrary.BottomBarV4View;
+import com.gjn.bottombarlibrary.IBarTab;
 import com.gjn.bottombarlibrary.OnBindBarDateListener;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<BarTab> list;
+    private List<IBarTab> list;
 //    private BottomBarView bbv;
     private BottomBarV4View bbv;
     private boolean change;
@@ -30,13 +30,15 @@ public class MainActivity extends AppCompatActivity {
         bbv = findViewById(R.id.bbv);
 
         list = new ArrayList<>();
-        BarTab barTab;
+//        BarTab barTab;
+        MyBarItem barTab;
         Bundle bundle;
         for (int i = 0; i < 4; i++) {
-            barTab = new BarTab();
+            barTab = new MyBarItem();
             barTab.setTitle("标题" + i);
             barTab.setImg(R.drawable.imgselect);
             barTab.setCls(TestFm.class);
+            barTab.setName("标题" + (i + 3));
             bundle = new Bundle();
             bundle.putInt("color", i);
             barTab.setBundle(bundle);
@@ -45,20 +47,22 @@ public class MainActivity extends AppCompatActivity {
 
         OnBindBarDateListener dataBind = new OnBindBarDateListener() {
             @Override
-            public void onBindBarView(View view, int i, BarTab item) {
+            public void onBindBarView(View view, int i, IBarTab item) {
+                MyBarItem barItem = (MyBarItem) item;
                 TextView textView = view.findViewById(R.id.tv);
-                textView.setText(item.getTitle());
+                textView.setText(barItem.getName());
                 ImageView imageView = view.findViewById(R.id.img);
-                imageView.setImageResource((Integer) item.getImg());
+                imageView.setImageResource((Integer) barItem.getImg());
             }
         };
 
         bbv.setOnBindBarDateListener(dataBind).updataView(list);
 
-        barTab = new BarTab();
+        barTab = new MyBarItem();
         barTab.setTitle("标题7");
         barTab.setImg(R.drawable.imgselect);
         barTab.setCls(TestFm.class);
+        barTab.setName("标题" + (7 + 3));
         bundle = new Bundle();
         bundle.putInt("color", 7);
         barTab.setBundle(bundle);

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by gjn on 2018/6/5.
  */
 
-public abstract class BottomBar<T extends BarTab> implements TabHost.OnTabChangeListener {
+public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChangeListener {
     private static final String TAG = "BottomBar";
     private Activity activity;
     private FragmentTabHost tabHost;

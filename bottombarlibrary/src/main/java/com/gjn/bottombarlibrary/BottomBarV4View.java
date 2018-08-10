@@ -20,8 +20,8 @@ import java.util.List;
 public class BottomBarV4View extends FrameLayout {
     private static final String TAG = "BottomBarV4View";
     private FragmentTabHostV4 tabHost;
-    private List<BarTab> list;
-    private BottomBarV4<BarTab> bar;
+    private List<IBarTab> list;
+    private BottomBarV4<IBarTab> bar;
     private int containerId = View.NO_ID;
     private int barViewId = View.NO_ID;
 
@@ -47,7 +47,7 @@ public class BottomBarV4View extends FrameLayout {
         tabHost = new FragmentTabHostV4(context);
     }
 
-    public BottomBarV4View setList(List<BarTab> list) {
+    public BottomBarV4View setList(List<IBarTab> list) {
         this.list = list;
         return this;
     }
@@ -85,7 +85,7 @@ public class BottomBarV4View extends FrameLayout {
         }
     }
 
-    public List<BarTab> getBarItems(){
+    public List<IBarTab> getBarItems(){
         if (bar != null) {
             return bar.getBarItems();
         }
@@ -104,7 +104,7 @@ public class BottomBarV4View extends FrameLayout {
         }
     }
 
-    public void updataView(List<BarTab> list){
+    public void updataView(List<IBarTab> list){
         setList(list);
         if (bar != null) {
             Log.d(TAG, "updata old " + TAG);
@@ -139,9 +139,9 @@ public class BottomBarV4View extends FrameLayout {
         Log.d(TAG, "create new " + TAG);
         removeAllViews();
         addView(tabHost, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        bar = new BottomBarV4<BarTab>((FragmentActivity) getContext(), tabHost, containerId, barViewId, list) {
+        bar = new BottomBarV4<IBarTab>((FragmentActivity) getContext(), tabHost, containerId, barViewId, list) {
             @Override
-            protected void onBindBarView(View view, int i, BarTab item) {
+            protected void onBindBarView(View view, int i, IBarTab item) {
                 onBindBarDateListener.onBindBarView(view, i, item);
             }
         };
