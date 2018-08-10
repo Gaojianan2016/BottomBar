@@ -89,7 +89,7 @@ public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChang
 
     public BottomBar setNotClick(int... positions) {
         if (positions == null) {
-            positions = new int[barItems.size()];
+            positions = new int[]{-1};
         }
         notOnClick = positions;
         return this;

@@ -87,7 +87,7 @@ public abstract class BottomBarV4<T extends IBarTab> implements TabHost.OnTabCha
 
     public BottomBarV4 setNotClick(int... positions) {
         if (positions == null) {
-            positions = new int[barItems.size()];
+            positions = new int[]{-1};
         }
         notOnClick = positions;
         return this;
