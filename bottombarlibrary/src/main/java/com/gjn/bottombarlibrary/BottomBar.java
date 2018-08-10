@@ -66,7 +66,7 @@ public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChang
         //初始化
         tabHost.removeAllViews();
         if (notOnClick == null) {
-            notOnClick = new int[barItems.size()];
+            notOnClick = new int[]{-1};
         }
         tabHost.setup(activity, manager, containerId);
         //tab切换监听

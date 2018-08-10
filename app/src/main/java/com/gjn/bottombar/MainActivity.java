@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gjn.bottombarlibrary.BarTab;
 import com.gjn.bottombarlibrary.BottomBarV4;
 import com.gjn.bottombarlibrary.BottomBarV4View;
 import com.gjn.bottombarlibrary.IBarTab;
@@ -30,15 +31,13 @@ public class MainActivity extends AppCompatActivity {
         bbv = findViewById(R.id.bbv);
 
         list = new ArrayList<>();
-//        BarTab barTab;
-        MyBarItem barTab;
+        BarTab barTab;
         Bundle bundle;
         for (int i = 0; i < 4; i++) {
-            barTab = new MyBarItem();
+            barTab = new BarTab();
             barTab.setTitle("标题" + i);
             barTab.setImg(R.drawable.imgselect);
             barTab.setCls(TestFm.class);
-            barTab.setName("标题" + (i + 3));
             bundle = new Bundle();
             bundle.putInt("color", i);
             barTab.setBundle(bundle);
@@ -48,21 +47,19 @@ public class MainActivity extends AppCompatActivity {
         OnBindBarDateListener dataBind = new OnBindBarDateListener() {
             @Override
             public void onBindBarView(View view, int i, IBarTab item) {
-                MyBarItem barItem = (MyBarItem) item;
                 TextView textView = view.findViewById(R.id.tv);
-                textView.setText(barItem.getName());
+                textView.setText(item.getTitle());
                 ImageView imageView = view.findViewById(R.id.img);
-                imageView.setImageResource((Integer) barItem.getImg());
+                imageView.setImageResource((Integer) item.getImg());
             }
         };
 
         bbv.setOnBindBarDateListener(dataBind).updataView(list);
 
-        barTab = new MyBarItem();
+        barTab = new BarTab();
         barTab.setTitle("标题7");
         barTab.setImg(R.drawable.imgselect);
         barTab.setCls(TestFm.class);
-        barTab.setName("标题" + (7 + 3));
         bundle = new Bundle();
         bundle.putInt("color", 7);
         barTab.setBundle(bundle);
