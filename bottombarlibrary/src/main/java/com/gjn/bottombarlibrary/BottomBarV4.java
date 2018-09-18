@@ -26,8 +26,8 @@ public abstract class BottomBarV4<T extends IBarTab> implements TabHost.OnTabCha
     private List<T> barItems;
     private int[] notOnClick;
 
-    private onTabClickListener onTabClickListener;
-    private onTabChangeListener onTabChangeListener;
+    private IonTabClickListener onTabClickListener;
+    private IonTabChangeListener onTabChangeListener;
 
     public BottomBarV4(FragmentActivity activity, FragmentTabHostV4 tabHost,
                        int containerId, int barViewId, List<T> barItems) {
@@ -139,16 +139,16 @@ public abstract class BottomBarV4<T extends IBarTab> implements TabHost.OnTabCha
         return barItems;
     }
 
-    public T getBarItem(int i) {
-        return barItems.get(i);
-    }
-
     public BottomBarV4 setBarItems(List<T> items) {
         barItems = items == null ? new ArrayList<T>() : barItems;
         return this;
     }
 
-    public BottomBarV4 setOnTabClickListener(onTabClickListener onTabClickListener) {
+    public T getBarItem(int i) {
+        return barItems.get(i);
+    }
+
+    public BottomBarV4 setOnTabClickListener(IonTabClickListener onTabClickListener) {
         this.onTabClickListener = onTabClickListener;
         for (int i = 0; i < getBarViewCount(); i++) {
             setOnTabClickListener(getBarView(i), i, getBarItem(i).getTitle());
@@ -156,7 +156,7 @@ public abstract class BottomBarV4<T extends IBarTab> implements TabHost.OnTabCha
         return this;
     }
 
-    public BottomBarV4 setOnTabChangeListener(onTabChangeListener l) {
+    public BottomBarV4 setOnTabChangeListener(IonTabChangeListener l) {
         this.onTabChangeListener = l;
         return this;
     }
@@ -199,11 +199,4 @@ public abstract class BottomBarV4<T extends IBarTab> implements TabHost.OnTabCha
 
     protected abstract void onBindBarView(View view, int i, T item);
 
-    public interface onTabClickListener {
-        void onClick(int i, String tabId);
-    }
-
-    public interface onTabChangeListener {
-        void onTabChanged(int i, String tabId);
-    }
 }

@@ -68,25 +68,25 @@ public class BottomBarView extends FrameLayout {
         return this;
     }
 
-    public void setCurrentTab(int i){
+    public void setCurrentTab(int i) {
         if (bar != null) {
             bar.setCurrentTab(i);
         }
     }
 
-    public void setOnTabClickListener(BottomBar.onTabClickListener l){
+    public void setOnTabClickListener(IonTabClickListener l) {
         if (bar != null) {
             bar.setOnTabClickListener(l);
         }
     }
 
-    public void setOnTabChangeListener(BottomBar.onTabChangeListener l){
+    public void setOnTabChangeListener(IonTabChangeListener l) {
         if (bar != null) {
             bar.setOnTabChangeListener(l);
         }
     }
 
-    public List<IBarTab> getBarItems(){
+    public List<IBarTab> getBarItems() {
         if (bar != null) {
             return bar.getBarItems();
         }
@@ -99,32 +99,32 @@ public class BottomBarView extends FrameLayout {
         }
     }
 
-    public void destroy(){
+    public void destroy() {
         if (bar != null) {
             bar.destroy();
         }
     }
 
-    public void updataView(List<IBarTab> list){
+    public void updataView(List<IBarTab> list) {
         setList(list);
         if (bar != null) {
             Log.d(TAG, "updata old " + TAG);
             bar.updataView(list);
-        }else {
+        } else {
             create();
         }
     }
 
-    public void updataView(){
+    public void updataView() {
         if (bar != null) {
             Log.d(TAG, "updata old " + TAG);
             bar.updataView();
-        }else {
+        } else {
             create();
         }
     }
 
-    private void create(){
+    private void create() {
         if (containerId == View.NO_ID) {
             Log.w(TAG, "containerId is null.");
             return;

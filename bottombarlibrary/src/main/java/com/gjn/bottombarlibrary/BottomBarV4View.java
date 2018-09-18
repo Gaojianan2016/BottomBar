@@ -73,13 +73,13 @@ public class BottomBarV4View extends FrameLayout {
         }
     }
 
-    public void setOnTabClickListener(BottomBarV4.onTabClickListener l){
+    public void setOnTabClickListener(IonTabClickListener l){
         if (bar != null) {
             bar.setOnTabClickListener(l);
         }
     }
 
-    public void setOnTabChangeListener(BottomBarV4.onTabChangeListener l){
+    public void setOnTabChangeListener(IonTabChangeListener l){
         if (bar != null) {
             bar.setOnTabChangeListener(l);
         }

@@ -1,13 +1,12 @@
 package com.gjn.bottombarlibrary;
 
 import android.os.Bundle;
-import android.view.View;
 
 /**
  * Created by gjn on 2018/6/5.
  */
 
-public class BarTab implements IBarTab{
+public class BarTab implements IBarTab {
     private String title;
     private Object img;
     private Class<?> cls;

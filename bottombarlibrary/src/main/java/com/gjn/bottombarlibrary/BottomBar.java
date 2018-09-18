@@ -27,8 +27,8 @@ public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChang
     private List<T> barItems;
     private int[] notOnClick;
 
-    private onTabClickListener onTabClickListener;
-    private onTabChangeListener onTabChangeListener;
+    private IonTabClickListener onTabClickListener;
+    private IonTabChangeListener onTabChangeListener;
 
     public BottomBar(FragmentActivity activity, FragmentTabHost tabHost,
                      int containerId, int barViewId, List<T> barItems) {
@@ -141,16 +141,16 @@ public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChang
         return barItems;
     }
 
-    public T getBarItem(int i) {
-        return barItems.get(i);
-    }
-
     public BottomBar setBarItems(List<T> items) {
         barItems = items == null ? new ArrayList<T>() : barItems;
         return this;
     }
 
-    public BottomBar setOnTabClickListener(onTabClickListener onTabClickListener) {
+    public T getBarItem(int i) {
+        return barItems.get(i);
+    }
+
+    public BottomBar setOnTabClickListener(IonTabClickListener onTabClickListener) {
         this.onTabClickListener = onTabClickListener;
         for (int i = 0; i < getBarViewCount(); i++) {
             setOnTabClickListener(getBarView(i), i, getBarItem(i).getTitle());
@@ -158,7 +158,7 @@ public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChang
         return this;
     }
 
-    public BottomBar setOnTabChangeListener(onTabChangeListener l) {
+    public BottomBar setOnTabChangeListener(IonTabChangeListener l) {
         this.onTabChangeListener = l;
         return this;
     }
@@ -200,12 +200,4 @@ public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChang
     }
 
     protected abstract void onBindBarView(View view, int i, T item);
-
-    public interface onTabClickListener {
-        void onClick(int i, String tabId);
-    }
-
-    public interface onTabChangeListener {
-        void onTabChanged(int i, String tabId);
-    }
 }
