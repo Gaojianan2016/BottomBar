@@ -19,7 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List<IBarTab> list;
-    //    private BottomBarView bbv;
+//    private BottomBarView bbv;
     private BottomBarV4View bbv;
     private boolean change;
 

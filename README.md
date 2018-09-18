@@ -32,8 +32,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gjn.bottombarlibrary.BarTab;
-import com.gjn.bottombarlibrary.BottomBarV4;
 import com.gjn.bottombarlibrary.BottomBarV4View;
+import com.gjn.bottombarlibrary.IBarTab;
+import com.gjn.bottombarlibrary.IonTabClickListener;
 import com.gjn.bottombarlibrary.OnBindBarDateListener;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<BarTab> list;
+    private List<IBarTab> list;
 //    private BottomBarView bbv;
     private BottomBarV4View bbv;
     private boolean change;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         OnBindBarDateListener dataBind = new OnBindBarDateListener() {
             @Override
-            public void onBindBarView(View view, int i, BarTab item) {
+            public void onBindBarView(View view, int i, IBarTab item) {
                 TextView textView = view.findViewById(R.id.tv);
                 textView.setText(item.getTitle());
                 ImageView imageView = view.findViewById(R.id.img);
@@ -103,13 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     bbv.getBarItems().get(3).setTitle("不能点");
                     bbv.getBarItems().get(4).setTitle("不能点");
-//                    bbv.setOnTabClickListener(new BottomBar.onTabClickListener() {
-//                        @Override
-//                        public void onClick(int i, String tabId) {
-//                            Log.e("-s-", "点击" + i + "，tabId=" + tabId);
-//                        }
-//                    });
-                    bbv.setOnTabClickListener(new BottomBarV4.onTabClickListener() {
+                    bbv.setOnTabClickListener(new IonTabClickListener() {
                         @Override
                         public void onClick(int i, String tabId) {
                             Log.e("-s-", "点击" + i + "，tabId=" + tabId);
@@ -128,5 +123,4 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 }
-
 ```
