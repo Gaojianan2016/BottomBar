@@ -93,7 +93,7 @@ public class BottomBarV4View extends FrameLayout {
     }
 
     public void setNotClick(int... positions) {
-        if (bar != null) {
+        if (bar != null && bar.getBarViewCount() > 0) {
             bar.setNotClick(positions);
         }
     }

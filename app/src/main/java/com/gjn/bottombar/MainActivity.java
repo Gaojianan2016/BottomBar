@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         bbv.setNotClick(3, 4);
 
-
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

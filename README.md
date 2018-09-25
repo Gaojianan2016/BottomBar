@@ -12,13 +12,17 @@ allprojects {
 
 
 dependencies {
-    implementation 'com.github.Gaojianan2016:BottomBar:1.0.9'
+    implementation 'com.github.Gaojianan2016:BottomBar:1.1.0'
 }
 ```
 
+<br >
 有默认的BottomBarView和BottomBarV4View
+<br >
 其中BottomBarView是使用官方自带的FragmentTabHost
+<br >
 BottomBarV4View是使用修改官方的FragmentTabHostV4，代码逻辑一样就修改了切换tab时候调用的commit、hide、show
+<br >
 
 # 基本使用（建议使用V4版本）
 ```
