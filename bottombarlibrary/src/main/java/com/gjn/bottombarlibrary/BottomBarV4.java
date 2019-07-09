@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by gjn on 2018/6/5.
+ * @author gjn
+ * @time 2018/6/5 11:18
  */
-
 public abstract class BottomBarV4<T extends IBarTab> implements TabHost.OnTabChangeListener {
     private static final String TAG = "BottomBarV4";
     private Activity activity;
@@ -167,10 +167,11 @@ public abstract class BottomBarV4<T extends IBarTab> implements TabHost.OnTabCha
             public void onClick(View v) {
                 if (onTabClickListener != null) {
                     onTabClickListener.onClick(i, title);
-                    for (int position : notOnClick) {
-                        if (position == i) {
-                            return;
-                        }
+                }
+                //监听无法点击
+                for (int position : notOnClick) {
+                    if (position == i) {
+                        return;
                     }
                 }
                 setCurrentTab(i);

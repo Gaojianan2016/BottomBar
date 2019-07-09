@@ -29,7 +29,7 @@ public class TestFm extends Fragment {
             color = bundle.getInt("color");
         }
 
-        switch (color){
+        switch (color % 4){
             case 1:
                 cl.setBackgroundColor(Color.GREEN);
                 break;

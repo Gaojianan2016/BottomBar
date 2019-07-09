@@ -3,7 +3,8 @@ package com.gjn.bottombarlibrary;
 import android.os.Bundle;
 
 /**
- * Created by gjn on 2018/6/5.
+ * @author gjn
+ * @time 2018/6/5 17:32
  */
 
 public class BarTab implements IBarTab {

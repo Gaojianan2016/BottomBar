@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by gjn on 2018/6/5.
+ * @author gjn
+ * @time 2018/6/5 11:18
  */
-
 public abstract class BottomBar<T extends IBarTab> implements TabHost.OnTabChangeListener {
     private static final String TAG = "BottomBar";
     private Activity activity;

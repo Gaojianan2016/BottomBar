@@ -4,4 +4,9 @@
         <attr name="containerId" format="reference" />
         <attr name="barViewId" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="bottomBarFragment">
+        <attr name="bbf_barViewId" format="reference" />
+
+    </declare-styleable>
 </resources>
