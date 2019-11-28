@@ -184,11 +184,15 @@ public abstract class NavigationBar<T extends INavigationBar> {
     }
 
     private View getCurrentView(){
-        return viewItems.get(mCurrent);
+        return getView(mCurrent);
     }
 
     public T getItem(int position){
         return barItems.get(position);
+    }
+
+    public View getView(int position){
+        return viewItems.get(position);
     }
 
     public int getItemCount(){

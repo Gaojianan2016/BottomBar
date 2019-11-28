@@ -105,6 +105,20 @@ public class NavigationBarView extends LinearLayout {
         return null;
     }
 
+    public INavigationBar getItem(int position){
+        if (navigationBar != null) {
+            return navigationBar.getItem(position);
+        }
+        return null;
+    }
+
+    public View getView(int position){
+        if (navigationBar != null) {
+            return navigationBar.getView(position);
+        }
+        return null;
+    }
+
     public NavigationBar<INavigationBar> getNavigationBar() {
         return navigationBar;
     }
