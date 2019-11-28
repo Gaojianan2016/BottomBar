@@ -12,7 +12,7 @@ allprojects {
 
 
 dependencies {
-    implementation 'com.github.Gaojianan2016:BottomBar:1.1.2'
+    implementation 'com.github.Gaojianan2016:BottomBar:1.1.3'
 }
 ```
 
@@ -23,33 +23,17 @@ dependencies {
 <br >
 BottomBarV4View是使用修改官方的FragmentTabHostV4，代码逻辑一样就修改了切换tab时候调用的commit、hide、show
 <br >
+NavigationBarView为无使用FragmentTabHost方法生成的底部导航栏，该导航栏有调用setUserVisibleHint方法。
 
-# 基本使用（建议使用V4版本）
+# 基本使用（建议使用V4版本或者NavigationBarView）
 ```
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.gjn.bottombarlibrary.BarTab;
-import com.gjn.bottombarlibrary.BottomBarV4View;
-import com.gjn.bottombarlibrary.IBarTab;
-import com.gjn.bottombarlibrary.IonTabClickListener;
-import com.gjn.bottombarlibrary.OnBindBarDateListener;
-import com.gjn.bottombarlibrary.SimpleBarTab;
-import com.gjn.bottombarlibrary.SimpleBottomBar;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     private List<IBarTab> list;
+    private List<INavigationBar> list2;
 //    private BottomBarView bbv;
     private BottomBarV4View bbv;
+    private NavigationBarView nbv;
     private boolean change;
 
     private SimpleBottomBar sbb;
@@ -61,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         useSimpleBottomBar();
 
-        useBottomBarV4View();
+//        useBottomBarV4View();
+
+        useNavigationBarView();
     }
 
     private void useSimpleBottomBar() {
@@ -177,6 +163,71 @@ public class MainActivity extends AppCompatActivity {
                     change = true;
                 }
                 bbv.updataView();
+            }
+        });
+    }
+
+    private void useNavigationBarView() {
+        nbv = findViewById(R.id.nbv);
+
+        list2 = new ArrayList<>();
+
+        NBarTab barTab;
+        Bundle bundle;
+
+        for (int i = 0; i < 4; i++) {
+            barTab = new NBarTab();
+            barTab.setTitle("标题" + i);
+            barTab.setImg(R.drawable.imgselect);
+            barTab.setFragment(new TestFm());
+            bundle = new Bundle();
+            bundle.putInt("color", i);
+            barTab.setBundle(bundle);
+            list2.add(barTab);
+        }
+
+        nbv.setOnBindBarViewListener(new NavigationBarView.onBindBarViewListener() {
+            @Override
+            public void onBindBarView(View view, int i, INavigationBar item) {
+                TextView textView = view.findViewById(R.id.tv);
+                textView.setText(item.getTitle());
+                ImageView imageView = view.findViewById(R.id.img);
+                imageView.setImageResource((Integer) item.getImg());
+            }
+        }).updateView(list2);
+
+        barTab = new NBarTab();
+        barTab.setTitle("标题7" );
+        barTab.setImg(R.drawable.imgselect);
+        barTab.setFragment(new TestFm());
+        bundle = new Bundle();
+        bundle.putInt("color", 7);
+        barTab.setBundle(bundle);
+        list2.add(barTab);
+        nbv.updateView();
+
+        nbv.setOnNavigationBarClickListener(new NavigationBar.OnNavigationBarClickListener() {
+            @Override
+            public void onClick(View view, int i, INavigationBar item) {
+                Log.e("-s-", "点击" + i + "，tabId=" + item.getTitle());
+            }
+        });
+
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (change) {
+                    change = false;
+                    nbv.getBarItems().get(3).setTitle("标题3");
+                    nbv.getBarItems().get(4).setTitle("标题7");
+                    nbv.setNotClick(-1);
+                } else {
+                    nbv.getBarItems().get(3).setTitle("不能点");
+                    nbv.getBarItems().get(4).setTitle("不能点");
+                    nbv.setNotClick(3, 4);
+                    change = true;
+                }
+                nbv.updateView();
             }
         });
     }

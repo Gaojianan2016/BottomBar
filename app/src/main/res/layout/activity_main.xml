@@ -26,6 +26,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <com.gjn.bottombarlibrary.NavigationBarView
+        android:id="@+id/nbv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barViewId="@layout/item"
+        app:containerId="@id/fl"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"

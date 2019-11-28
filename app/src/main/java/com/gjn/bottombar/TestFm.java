@@ -40,7 +40,7 @@ public class TestFm extends Fragment {
                 cl.setBackgroundColor(Color.BLUE);
                 break;
             default:
-                cl.setBackgroundColor(Color.RED);
+                cl.setBackgroundColor(Color.GRAY);
         }
         return view;
     }
