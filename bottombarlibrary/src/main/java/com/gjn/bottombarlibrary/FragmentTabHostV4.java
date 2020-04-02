@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -293,13 +294,20 @@ public class FragmentTabHostV4 extends TabHost
     private void checkRestored() {
         // 防止画面被回收后Fragment白屏
         if (isRestored) {
-            if (mTabs != null && mTabs.size() > 0) {
-                for (int i = 0; i < mTabs.size(); i++) {
-                    TabInfo tab = mTabs.get(i);
-                    if (!tab.tag.equals(mLastTab.tag)) {
-                        tab.fragment = null;
+            try {
+                if (mLastTab == null) {
+                    Log.w("FragmentTabHostV4", "mLastTab is null.");
+                }
+                if (mTabs != null && mTabs.size() > 0) {
+                    for (int i = 0; i < mTabs.size(); i++) {
+                        TabInfo tab = mTabs.get(i);
+                        if (!tab.tag.equals(mLastTab.tag)) {
+                            tab.fragment = null;
+                        }
                     }
                 }
+            }catch (Exception e){
+                e.printStackTrace();
             }
             isRestored = false;
         }

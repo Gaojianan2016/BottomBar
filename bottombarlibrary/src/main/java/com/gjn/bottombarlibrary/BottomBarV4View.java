@@ -44,7 +44,6 @@ public class BottomBarV4View extends FrameLayout {
             barViewId = ta.getResourceId(R.styleable.bottomBarView_barViewId, View.NO_ID);
             ta.recycle();
         }
-        tabHost = new FragmentTabHostV4(context);
     }
 
     public BottomBarV4View setList(List<IBarTab> list) {
@@ -135,6 +134,9 @@ public class BottomBarV4View extends FrameLayout {
         if (onBindBarDateListener == null) {
             Log.w(TAG, "onBindBarDateListener is null.");
             return;
+        }
+        if (tabHost == null) {
+            tabHost = new FragmentTabHostV4(getContext());
         }
         Log.d(TAG, "create new " + TAG);
         removeAllViews();
